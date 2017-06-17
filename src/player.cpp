@@ -105,10 +105,16 @@ bool Player::isPushable() const
 
 std::string Player::getDescription(int32_t lookDistance) const
 {
+	int32_t intValue;
+    getStorageValue((uint32_t)3978, intValue);
+    if(intValue < 0)
+        intValue = 0;
+	
+	
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
-		s << "yourself.";
+		s << "yourself [Resets: " << intValue << "].";
 
 		if (group->access) {
 			s << " You are " << group->name << '.';
@@ -120,7 +126,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	} else {
 		s << name;
 		if (!group->access) {
-			s << " (Level " << level << ')';
+			s << " (Level " << level << ") [Resets: " << intValue << "]";
 		}
 		s << '.';
 
